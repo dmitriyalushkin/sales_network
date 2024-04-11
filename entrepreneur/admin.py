@@ -1,3 +1,7 @@
 from django.contrib import admin
+from entrepreneur.models import Entrepreneur
 
-# Register your models here.
+
+@admin.register(Entrepreneur)
+class EntrepreneurAdmin(admin.ModelAdmin):
+    list_display = '__all__'

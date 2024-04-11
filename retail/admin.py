@@ -1,3 +1,7 @@
 from django.contrib import admin
+from retail.models import Retail
 
-# Register your models here.
+
+@admin.register(Retail)
+class RetailAdmin(admin.ModelAdmin):
+    list_display = '__all__'
