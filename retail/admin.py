@@ -4,4 +4,6 @@ from retail.models import Retail
 
 @admin.register(Retail)
 class RetailAdmin(admin.ModelAdmin):
-    list_display = '__all__'
+    list_display = ('factory',)
+    list_filter = ('city_retail',)
+

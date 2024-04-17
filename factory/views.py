@@ -1,9 +1,9 @@
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
+from factory.permissions import IsUserOrActive
 
-from factory.paginators import FactoryPaginator
-from factory.permissions import IsModuleOwner, IsLessonOwner
+from factory.paginators import FactoryPagination
 
 from factory.models import Factory
 from factory.serializers import FactorySerializer
@@ -27,7 +27,7 @@ class FactoryListAPIView(generics.ListAPIView):
     serializer_class = FactorySerializer
     queryset = Factory.objects.all()
     permission_classes = [IsAuthenticated]
-    pagination_class = FactoryPaginator
+    pagination_class = FactoryPagination
     filter_backends = [OrderingFilter]
     ordering_fields = ('country_factory',)
 
@@ -45,11 +45,11 @@ class FactoryUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = FactorySerializer
     queryset = Factory.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated | IsUserOrActive]
 
 
 class FactoryDestroyAPIView(generics.DestroyAPIView):
     """ Класс удаления завода """
 
     queryset = Factory.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated | IsUserOrActive]

@@ -1,9 +1,9 @@
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
+from entrepreneur.permissions import IsUserOrActive
 
-from entrepreneur.paginators import EntrepreneurPaginator
-from entrepreneur.permissions import IsModuleOwner, IsLessonOwner
+from entrepreneur.paginators import EntrepreneurPagination
 
 from entrepreneur.models import Entrepreneur
 from entrepreneur.serializers import EntrepreneurSerializer
@@ -27,7 +27,7 @@ class EntrepreneurListAPIView(generics.ListAPIView):
     serializer_class = EntrepreneurSerializer
     queryset = Entrepreneur.objects.all()
     permission_classes = [IsAuthenticated]
-    pagination_class = EntrepreneurPaginator
+    pagination_class = EntrepreneurPagination
     filter_backends = [OrderingFilter]
     ordering_fields = ('country_entrepreneur',)
 
@@ -45,11 +45,11 @@ class EntrepreneurUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = EntrepreneurSerializer
     queryset = Entrepreneur.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated | IsUserOrActive]
 
 
 class EntrepreneurDestroyAPIView(generics.DestroyAPIView):
     """ Класс удаления предпринимателя """
 
     queryset = Entrepreneur.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated | IsUserOrActive]

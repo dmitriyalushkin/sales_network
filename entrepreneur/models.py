@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from datetime import date
 from django.utils import timezone
@@ -25,6 +26,9 @@ class Entrepreneur(models.Model):
     retail = models.ForeignKey(Retail, on_delete=models.CASCADE, verbose_name='розничная сеть')
     arrears = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='задолженность')
     time_create = models.DateTimeField(default=timezone.now, verbose_name='время создания')
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                             verbose_name='владелец', **NULLABLE)
 
     def __str__(self):
         return f'{self.name_entrepreneur}'

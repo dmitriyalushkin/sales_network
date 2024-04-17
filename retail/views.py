@@ -1,9 +1,9 @@
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
+from retail.permissions import IsUserOrActive
 
-from retail.paginators import RetailPaginator
-from retail.permissions import IsModuleOwner, IsLessonOwner
+from retail.paginators import RetailPagination
 
 from retail.models import Retail
 from retail.serializers import RetailSerializer
@@ -27,7 +27,7 @@ class RetailListAPIView(generics.ListAPIView):
     serializer_class = RetailSerializer
     queryset = Retail.objects.all()
     permission_classes = [IsAuthenticated]
-    pagination_class = RetailPaginator
+    pagination_class = RetailPagination
     filter_backends = [OrderingFilter]
     ordering_fields = ('country_factory',)
 
@@ -45,11 +45,11 @@ class RetailUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = RetailSerializer
     queryset = Retail.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated | IsUserOrActive]
 
 
 class RetailDestroyAPIView(generics.DestroyAPIView):
     """ Класс удаления розничной сети """
 
     queryset = Retail.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated | IsUserOrActive]
