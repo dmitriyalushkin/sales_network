@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
-from factory.permissions import IsUserOrActive
+from factory.permissions import IsUserOrActive, CustomUpdatePermission
 
 from factory.paginators import FactoryPagination
 
@@ -45,7 +45,7 @@ class FactoryUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = FactorySerializer
     queryset = Factory.objects.all()
-    permission_classes = [IsAuthenticated | IsUserOrActive]
+    permission_classes = [IsAuthenticated | IsUserOrActive | CustomUpdatePermission]
 
 
 class FactoryDestroyAPIView(generics.DestroyAPIView):

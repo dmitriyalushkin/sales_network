@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
-from retail.permissions import IsUserOrActive
+from retail.permissions import IsUserOrActive, CustomUpdatePermission
 
 from retail.paginators import RetailPagination
 
@@ -45,7 +45,7 @@ class RetailUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = RetailSerializer
     queryset = Retail.objects.all()
-    permission_classes = [IsAuthenticated | IsUserOrActive]
+    permission_classes = [IsAuthenticated | IsUserOrActive | CustomUpdatePermission]
 
 
 class RetailDestroyAPIView(generics.DestroyAPIView):

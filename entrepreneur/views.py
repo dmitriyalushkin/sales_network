@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
-from entrepreneur.permissions import IsUserOrActive
+from entrepreneur.permissions import IsUserOrActive, CustomUpdatePermission
 
 from entrepreneur.paginators import EntrepreneurPagination
 
@@ -45,7 +45,7 @@ class EntrepreneurUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = EntrepreneurSerializer
     queryset = Entrepreneur.objects.all()
-    permission_classes = [IsAuthenticated | IsUserOrActive]
+    permission_classes = [IsAuthenticated | IsUserOrActive | CustomUpdatePermission]
 
 
 class EntrepreneurDestroyAPIView(generics.DestroyAPIView):
